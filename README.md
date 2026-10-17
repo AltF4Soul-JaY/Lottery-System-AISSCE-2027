@@ -1,0 +1,3 @@
+# Problem Statement: Lottery Management System
+
+Manual lottery management can lead to errors in ticket registration, duplicate entries, winner selection, and result recordkeeping. A computerized system is needed to manage user records, register lottery tickets, maintain ticket purchase history, randomly select winners using Python, and store and retrieve lottery results efficiently through a database.
