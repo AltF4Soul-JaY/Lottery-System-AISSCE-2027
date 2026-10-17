@@ -113,24 +113,34 @@ Stores lottery session schedules.
 
 ### Step 1: Clone the repository
 
+```bash
 git clone https://github.com/AltF4Soul-JaY/Lottery-System-AISSCE-2027.git
 cd Lottery-System-AISSCE-2027
+```
 
 ### Step 2: Create a virtual environment
 
+```bash
 python -m venv .venv
+```
 
 Activate it in Windows PowerShell:
 
+```powershell
 .venv\Scripts\Activate.ps1
+```
 
 Or in Git Bash:
 
+```bash
 source .venv/Scripts/activate
+```
 
 ### Step 3: Install dependencies
 
+```bash
 pip install -r requirements.txt
+```
 
 ### Step 4: Configure MySQL
 
@@ -142,7 +152,9 @@ The current implementation contains hardcoded database connection settings. Conf
 
 ### Step 5: Run the application
 
+```bash
 python main.py
+```
 
 Follow the terminal menu to access the public-user or administrator interface.
 
@@ -187,5 +199,5 @@ This project is distributed under the MIT License. See the `LICENSE` file for th
 **Project:** Lottery Management System  
 **Academic session:** AISSCE 2027  
 **Subject:** Computer Science  
-**Programming Language:** Python  
+**Language:** Python  
 **Database:** MySQL
