@@ -107,7 +107,7 @@ def purge_lottery_logs():
         database="LOTTERY"
     )
     cnx = mydb.cursor()
-    query = "DELETE FROM LOTTERY_LOGS"
+    query = "DELETE FROM lottery_logs"
     cnx.execute(query)
     mydb.commit()
     cnx.close()
@@ -119,21 +119,29 @@ def end_lottery_session():
         password="123456",
         database="LOTTERY"
     )
-    cnx = mydb.cursor()
-    query = "DELETE FROM LOTTERY_SESSIONS"
-    cnx.execute(query)
-    mydb.commit()
-    cnx.close()
     lottery_number = pick_lottery_number()
     print(f"The lottery session has ended. The winning lottery number is: {lottery_number}")
-    if input("Do you want to purge all lottery logs? (yes/no): ").lower() == "yes":
+    if input("Do you want to purge all lottery logs? (yes/no): ").lower() == "yes" or "y":
         purge_lottery_logs()
     else:
         print("Lottery logs have not been purged.")
 
 def pick_lottery_number():
-    temp_char = "#"
-    return temp_char + str(random.randint(100000, 999999))
+    mydb = mcp.connect(
+        host="localhost",
+        user="root",
+        password="123456",
+        database="LOTTERY"
+    )
+    cnx = mydb.cursor()
+    query = "SELECT lottery_number FROM lottery_logs"
+    cnx.execute(query)
+    lottery_numbers = []
+    for numbers in cnx.fetchall():
+        lottery_numbers.append(numbers)
+    print(lottery_numbers)
+    # picked_number = random.choice(lottery_numbers)
+    return # picked_number
 
 def panel(admin_id):
     print(f"Welcome, {admin_id}!")
