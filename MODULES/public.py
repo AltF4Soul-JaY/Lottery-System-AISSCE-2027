@@ -18,7 +18,7 @@ def user_id_generator():
         user_id = random.randint(100000, 999999)
         if user_id not in existing_ids:
             break
-    return str(user_id)
+    return user_id
 
 def register_user():
     mydb = mcp.connect(
@@ -35,13 +35,13 @@ def register_user():
     user_id = user_id_generator()
 
     query = f"""INSERT INTO USERS VALUES
-    ({id}, "{input_name}", "{password}", "{address}", "{phone_number}", "{email}", DEFAULT)"""
+    ({user_id}, "{input_name}", "{password}", "{address}", "{phone_number}", "{email}", DEFAULT)"""
 
     cnx = mydb.cursor()
     cnx.execute(query)
     mydb.commit()
     cnx.close()
-    return id
+    return user_id
 
 def user_login():
     id = input("Enter your USER ID: ")

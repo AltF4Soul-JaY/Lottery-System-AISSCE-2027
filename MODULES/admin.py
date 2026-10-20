@@ -13,11 +13,10 @@ def create_lottery_session():
     cnx = mydb.cursor()
     cnx.execute(query)
     records = cnx.fetchall()
-    for sessions in records:
-        if sessions:
-            allowed = False
-        else:
-            allowed = True
+    if records:
+        allowed = False
+    else:
+        allowed = True
     input_start = input("Enter lottery start time (YYYY-MM-DD HH:MM:SS): ")
     input_end = input("Enter lottery end time (YYYY-MM-DD HH:MM:SS): ")
     if allowed:
@@ -120,6 +119,10 @@ def end_lottery_session():
         database="LOTTERY"
     )
     lottery_number = pick_lottery_number()
+    cnx = mydb.cursor()
+    query = "DELETE from SESSIONS"
+    cnx.execute(query)
+    mydb.commit()
     print(f"The lottery session has ended. The winning lottery number is: {lottery_number}")
     if input("Do you want to purge all lottery logs? (yes/no): ").lower() == "yes" or "y":
         purge_lottery_logs()
@@ -139,9 +142,8 @@ def pick_lottery_number():
     lottery_numbers = []
     for numbers in cnx.fetchall():
         lottery_numbers.append(numbers)
-    print(lottery_numbers)
-    # picked_number = random.choice(lottery_numbers)
-    return # picked_number
+    picked_number = random.choice(lottery_numbers)
+    return picked_number
 
 def panel(admin_id):
     print(f"Welcome, {admin_id}!")
