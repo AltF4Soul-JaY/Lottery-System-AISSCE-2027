@@ -57,10 +57,14 @@ def initialize_database():
 def login():
     id = input("Enter your ADMIN ID: ")
     password = input("Enter your password: ")
+
     if id == "admin" and password == "la@1234":
         print("Login successful!")
-    initialize_database()
-    return "admin"
+        initialize_database()
+        return "admin"
+    else:
+        print("Invalid ADMIN ID or password.")
+        return None
 
 def view_users():
     mydb = mcp.connect(
@@ -124,7 +128,7 @@ def end_lottery_session():
     cnx.execute(query)
     mydb.commit()
     print(f"The lottery session has ended. The winning lottery number is: {lottery_number}")
-    if input("Do you want to purge all lottery logs? (yes/no): ").lower() == "yes" or "y":
+    if input("Do you want to purge all lottery logs? (yes/no): ").strip().lower() in ("yes", "y"):
         purge_lottery_logs()
     else:
         print("Lottery logs have not been purged.")
@@ -139,11 +143,15 @@ def pick_lottery_number():
     cnx = mydb.cursor()
     query = "SELECT lottery_number FROM lottery_logs"
     cnx.execute(query)
-    lottery_numbers = []
-    for numbers in cnx.fetchall():
-        lottery_numbers.append(numbers)
-    picked_number = random.choice(lottery_numbers)
-    return picked_number
+    lottery_numbers = [row[0] for row in cnx.fetchall()]
+    cnx.close()
+    mydb.close()
+    if not lottery_numbers:
+        print("No lottery tickets available.")
+        return None
+    else:
+        picked_number = random.choice(lottery_numbers)
+        return picked_number
 
 def panel(admin_id):
     print(f"Welcome, {admin_id}!")
